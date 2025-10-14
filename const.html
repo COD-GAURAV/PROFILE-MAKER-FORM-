@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persistent Profile Image</title>
+<style>
+  body { font-family: Arial; margin: 40px; text-align: center; }
+  img { width: 120px; height: 120px; border-radius: 50%; margin-top: 20px; border: 2px solid #333; }
+</style>
+</head>
+<body>
+
+<h2>Upload Profile Photo</h2>
+
+<form id="form1">
+  <button id="uploadBtn" type="button">Upload Image</button>
+  <input type="file" id="fileInput" accept="image/*" style="display:none;">
+  <img id="preview" src="" alt="Preview" style="display:none;">
+  <br><br>
+  <button type="submit">Save Profile</button>
+</form>
+
+<hr>
+
+<form id="form2">
+  <h2>Second Form</h2>
+  <input type="text" placeholder="Enter something">
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+const uploadBtn = document.getElementById("uploadBtn");
+const fileInput = document.getElementById("fileInput");
+const preview = document.getElementById("preview");
+const form1 = document.getElementById("form1");
+
+// Load saved image on page load
+window.addEventListener("DOMContentLoaded", () => {
+  const savedImage = localStorage.getItem("profileImage");
+  if (savedImage) {
+    preview.src = savedImage;
+    preview.style.display = "block";
+  }
+});
+
+uploadBtn.addEventListener("click", () => {
+  fileInput.click();
+});
+
+fileInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const base64Image = event.target.result;
+      preview.src = base64Image;
+      preview.style.display = "block";
+      // Save image in localStorage
+      localStorage.setItem("profileImage", base64Image);
+    }
+    reader.readAsDataURL(file);
+  }
+});
+
+form1.addEventListener("submit", (e) => {
+  e.preventDefault();
+  alert("Profile saved (image stored permanently)!");
+});
+</script>
+
+</body>
+</html>
