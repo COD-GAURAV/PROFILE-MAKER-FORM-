@@ -80,7 +80,10 @@ form.addEventListener("submit", (e) => {
     document.getElementById("nav").style.display = `flex`
     form.reset();
     document.querySelector(".popup-box").style.display = "flex"
+     document.querySelector("#ser").textContent = `Success!`
+     document.querySelector("#data").textContent = `Your data has been saved successfully.`
     setTimeout(function(){
+      window.location.reload()
       document.querySelector(".popup-box").style.display = "none"
     },3000)
   }
@@ -94,6 +97,7 @@ function renderName(arr) {
   arr.forEach((val) => {
     const partProfile = document.createElement("div");
     partProfile.id = "Part-Profile";
+    partProfile.className = `profilePart`
 
     // 1️⃣ Profile Image
     const divImg = document.createElement("div");
@@ -111,6 +115,7 @@ function renderName(arr) {
     divName.classList.add("profile");
     const name = document.createElement("h3");
     name.id = "profilehed";
+    name.className = `name`
     name.textContent = val.Name;
     divName.appendChild(name);
 
@@ -120,6 +125,7 @@ function renderName(arr) {
     const role = document.createElement("p");
     role.id = "profilerole";
     role.textContent = val.roleOfUser;
+    role.className = `role`
     divRole.appendChild(role);
 
 
@@ -131,14 +137,19 @@ function renderName(arr) {
     bio.textContent = val.bio;
     divBio.appendChild(bio);
 
+    const divDelete = document.createElement("div")
+    divDelete.classList.add("profile")
+    const deleteB = document.createElement("p")
+    deleteB.className = "delete"
+    deleteB.id = `profileDelete`
+    deleteB.textContent = `DELETE YOUR ACCOUNT`
+    divDelete.appendChild(deleteB)
+
     // Append all parts to main container
-    partProfile.append(divImg, divName, divRole, divBio);
+    partProfile.append(divImg, divName, divRole, divBio ,divDelete);
 
     // Finally, add to the document body (or another container)
     document.getElementById("profilesection").appendChild(partProfile);
-
-    
-    
   });
 }
 
@@ -149,7 +160,6 @@ const search = document.getElementById("search")
 search.addEventListener("input",(e)=>{
   const filter = users.filter((val)=>{
     return val.Name.toLowerCase().startsWith(search.value)
-
   })
   renderName(filter)
 })
@@ -176,5 +186,35 @@ addUserBtn.addEventListener("click",(e)=>{
   document.getElementById("profilesection").style.display = `none`
   document.getElementById("nav").style.display = `none`
   addUserBtn.style.display = `none`
+})
+
+const p = document.querySelectorAll(".delete")
+
+
+
+p.forEach((val)=>{
+  val.addEventListener("click",(e)=>{
+    let respone = confirm("DO YOU WANT TO DELETE YOUR ACCOUNT")
+    if(respone){
+       const name = e.target.offsetParent.childNodes[1].textContent
+        const role = e.target.offsetParent.childNodes[2].textContent
+        const deleteIndex = users.findIndex((val)=>{
+          return val.Name.toLowerCase() === name.toLowerCase() ||  val.roleOfUser.toLowerCase() === role.toLowerCase() 
+        })
+      users.splice(deleteIndex,1)
+      renderName(users)
+      localStorage.setItem("users",JSON.stringify(users))
+      document.querySelector(".popup-box").style.display = "flex"
+      document.querySelector("#ser").textContent = `DELETED SUCCESSFULLY`
+      document.querySelector("#data").textContent = ``
+      setTimeout(function(){
+         window.location.reload()
+        document.querySelector(".popup-box").style.display = "none"
+      },3000)
+    }
+    else{
+     
+    }
+  })
 })
 
