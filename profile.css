@@ -11,7 +11,11 @@ body {
   background: linear-gradient(135deg, #141E30, #243B55);
   color: #fff;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar{
+  display: none;
 }
 
 /* ====== NAVBAR ====== */
@@ -242,8 +246,8 @@ img {
 /* ====== POPUP ====== */
 .popup-container {
   position: fixed;
-  top: 2%;
-  left: 2%;
+  bottom: 2%;
+  right: 2%;
   z-index: 100;
 }
 
@@ -263,6 +267,46 @@ img {
 
 .popup-box.show {
   display: block;
+}
+
+
+#delete-popup{
+  height: 20vh;
+  width: 25vw;
+  position: absolute;
+  top: 35%;
+  right: 37.5%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222;
+  display: none;
+}
+
+.progress-box{
+  height: 90%;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+
+}
+
+.progress-bar{
+  height: 10px;
+  width: 90%;
+  background-color: white;
+  border-radius: 50px;
+}
+
+.progress-fill{
+  height: 100%;
+  width: 20%;
+  background-color: #00c6ff;
+  border-radius: 50px;
 }
 
 /* ====== ANIMATIONS ====== */
@@ -290,4 +334,36 @@ img {
   #Part-Profile {
     width: 85%;
   }
+
+  #delete-popup{
+  height: 30%;
+  width: 90%;
+  position: absolute;
+  top: 35%;
+  right: 5%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222;
+  display: none;
+}
+
+.progress-box{
+  height: 90%;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+
+}
+
+.progress-bar{
+  height: 10px;
+  width: 90%;
+  background-color: white;
+  border-radius: 50px;
+}
 }
